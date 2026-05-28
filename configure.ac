@@ -64,12 +64,12 @@ AC_SUBST(PISYNC_AGE)
 dnl Eat -Werror so configure will run properly, if the user provided it
 enable_werror=no
 save_CFLAGS="$CFLAGS"
-CFLAGS=$(echo $save_CFLAGS | sed -e s/-Werror//g)
-CXXFLAGS=$(echo $save_CXXFLAGS | sed -e s/-Werror//g)
-if test "x$CFLAGS" != "x$save_CFLAGS"; then
-	dnl -Werror was set; treat it as implicit --enable-werror below
-	enable_werror="yes"
-fi
+save_CXXFLAGS="$CXXFLAGS"
+CFLAGS=$(printf '%s\n' "$save_CFLAGS" | sed -E 's/(^|[[:space:]])-Werror([= ][^[:space:]]+)?([[:space:]]|$)/ /g; s/[[:space:]]+/ /g; s/^ //; s/ $//')
+CXXFLAGS=$(printf '%s\n' "$save_CXXFLAGS" | sed -E 's/(^|[[:space:]])-Werror([= ][^[:space:]]+)?([[:space:]]|$)/ /g; s/[[:space:]]+/ /g; s/^ //; s/ $//')
+dnl Do not auto-enable -Werror even if the incoming flags had it.
+dnl Distros may inject narrow forms like -Werror=implicit-function-declaration
+dnl for compile checks; forcing global -Werror breaks normal package builds.
 
 
 dnl Check host type

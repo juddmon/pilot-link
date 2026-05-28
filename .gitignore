@@ -36,5 +36,15 @@ include/pi-version.h
 missing
 test-driver
 ylwrap
+# Binaries
+libpisock/*.la
+libpisock/*.lo
+libpisock/*.o
+libpisync/*.la
+libpisync/*.lo
+libpisync/*.o
+tests/*.o
+# Emacs
+*~
 # A popular IDE
 *.code-workspace
